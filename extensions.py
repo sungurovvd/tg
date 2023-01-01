@@ -9,7 +9,7 @@ class APIException(Exception):
 
 class Converter:
     @staticmethod
-    def convert(base, quote, count):
+    def convert(base, quote, amount):
         try:
             base = keys.get(base.lower())
         except KeyError:
@@ -24,15 +24,15 @@ class Converter:
             raise APIException('Одинаковые валюты')
 
         try:
-            count = float(count)
-            if count <= 0:
+            amount = float(amount)
+            if amount <= 0:
                 raise APIException('Количество меньше или равно нулю')
         except ValueError:
-            raise APIException(f'Не удалось обработать число: {count}')
+            raise APIException(f'Не удалось обработать число: {amount}')
 
         base_rates = float(Converter.rates(base))
         quote_rates = float(Converter.rates(quote))
-        return base, quote, quote_rates/base_rates*count
+        return base, quote, quote_rates/base_rates*amount
 
     @staticmethod
     def rates(nmbr):

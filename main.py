@@ -37,8 +37,8 @@ def convert(message: telebot.types.Message):
         elif len(variables) == 1:
             raise APIException('Переменная одна')
 
-        base, quote, count = variables
-        base, quote, answer = Converter.convert(base, quote, count)
+        base, quote, amount = variables
+        base, quote, answer = Converter.convert(base, quote, amount)
 
     except APIException as e:
         print(message.text)
@@ -47,7 +47,7 @@ def convert(message: telebot.types.Message):
         print(message.text)
         bot.reply_to(message, f'Не удалось обработать команду. Ошибка: {e}')
     else:
-        bot.reply_to(message, f'В {count} {base} - {answer} {quote} ')
+        bot.reply_to(message, f'В {amount} {base} - {answer} {quote} ')
 
 
 bot.polling()
